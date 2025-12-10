@@ -8,16 +8,15 @@ export default function Index() {
     <View style={styles.container}>
       <Image source={timerType.image} />
       <View style={styles.actions}>
-        <View style={styles.context}>
-          {
-            pomodoro.map(
-              p => (
-            <Pressable key={p.id}>
-              <Text style={styles.contextButtonText}>
-                {p.display}
-              </Text>
-            </Pressable>))
-          }
+      <View style={styles.context}>
+             {pomodoro.map(p =>(
+                  <Pressable key={p.id} style={timerType.id === p.id ? styles.contextButtonActive:null} 
+                   onPress={() => setTimerType(p)}>
+                      <Text style={styles.contextButtonText}>
+                          {p.display}
+                     </Text>
+                  </Pressable> 
+             ))}
           
         </View>
          <Text style={styles.timer}>
@@ -34,7 +33,7 @@ export default function Index() {
            Aplicativo Flow para Gestão do Tempo
           </Text>
           <Text style={styles.footerText}>
-             Desenvolvido por SenaTech
+             Desenvolvido por SenaiTech
           </Text>
       </View>
     </View>
