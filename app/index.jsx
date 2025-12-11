@@ -1,41 +1,33 @@
 import { useState } from "react";
-import {Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {Image, StyleSheet, Text, View } from "react-native";
+import { FlowButton } from "../components/FlowButton";
+import { ActionButton } from "../components/ActionButton";
+import { FlowFooter } from "../components/FlowFooter";
+import { Timer } from "../components/Timer";
 
 export default function Index() {
 
-  const [timerType,setTimerType] = useState(pomodoro[0])
+  const [timerType,setTimerType] = useState(pomodoro[2])
   return (
     <View style={styles.container}>
       <Image source={timerType.image} />
       <View style={styles.actions}>
       <View style={styles.context}>
              {pomodoro.map(p =>(
-                  <Pressable key={p.id} style={timerType.id === p.id ? styles.contextButtonActive:null} 
-                   onPress={() => setTimerType(p)}>
-                      <Text style={styles.contextButtonText}>
-                          {p.display}
-                     </Text>
-                  </Pressable> 
-             ))}
-          
-        </View>
-         <Text style={styles.timer}>
-              {new Date(timerType.initialValue * 60000).toLocaleTimeString('pt-BR',{minute:'2-digit',second:'2-digit'})}
-         </Text> 
-         <Pressable style={styles.button} >
-            <Text style={styles.buttonText}>
-               Começar
-            </Text>
-         </Pressable>       
+                  // componente actionButton
+                  <ActionButton
+                    key={p.id}
+                    active={ timerType.id === p.id }
+                    onPress={() => setTimerType(p)}
+                    display={p.display}/>
+                  ))}
+        </View >
+        <Timer totalSeconds = {timerType.initialValue}/>
+         {/* componente botão */}
+         <FlowButton/>
       </View>
-      <View style={styles.footer}>
-          <Text style={styles.footerText}>
-           Aplicativo Flow para Gestão do Tempo
-          </Text>
-          <Text style={styles.footerText}>
-             Desenvolvido por SenaiTech
-          </Text>
-      </View>
+        {/* footer vem aqui */}
+        <FlowFooter/>
     </View>
   );
 }
@@ -47,10 +39,8 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         backgroundColor:'#021123',
-      
      },
      actions: {
-        
         paddingVertical: 24,
         paddingHorizontal: 24,
         backgroundColor: '#14448080',
@@ -66,61 +56,29 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center'
      },
-     buttonText: {
-         textAlign: 'center',
-         color: '#021123',
-         fontSize: 18
-     },
-     button: {
-         backgroundColor: "#B872FF",
-         borderRadius: 32,
-         padding: 10,
-         
-     }, 
-     footer: {
-       width: '80%',
-       borderWidth: 2,
-       paddingVertical: 25,
-     },
-     footerText: {
-       textAlign: 'center',
-       color: '#98A0A8',
-       fontSize: 12.5
-     },
      context:{
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
      },
-     contextButtonText:{
-      fontSize:12.5,
-      color: '#FFFF',
-      padding: 8,
-     },
-     contextButtonActive:{
-      backgroundColor: '#144480',
-      borderRadius: 12,
-     }
 });
 const pomodoro = [
   {
     id: 'focus',
     initialValue:25,
     image:require('./pomodoro.png'),
-    display: 'Foco'
+    display: 'Focus'
   },
   {
     id: 'short',
     initialValue:5,
     image:require('./short.png'),
-    display: 'Pausa curta'
+    display: 'Short'
   },
   {
     id: 'long',
     initialValue:15,
     image:require('./long.png'),
-    display: 'Pausa longa'
+    display: 'Long'
   }
 ]
-
-//export default app;
