@@ -1,13 +1,19 @@
 import { useState } from "react";
-import {Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { pomodoro } from "../components/Pomodoro";
 import { FlowButton } from "../components/FlowButton";
 import { ActionButton } from "../components/ActionButton";
 import { FlowFooter } from "../components/FlowFooter";
 import { Timer } from "../components/Timer";
+import { usePomodoroLogic } from "../hooks/usePomodoroLogic";
 
 export default function Index() {
-
-  const [timerType,setTimerType] = useState(pomodoro[2])
+  const [timerType,setTimerType] = useState(pomodoro[0])
+  const {timeLeft, currentTime, startTimer, pauseTimer, resetTimer} = usePomodoroLogic(timerType.initialValue);
+  const handleChangeTimer = (type) => {
+    resetTimer(type.initialValue);
+    setTimerType(type);
+  }
   return (
     <View style={styles.container}>
       <Image source={timerType.image} />
@@ -18,13 +24,17 @@ export default function Index() {
                   <ActionButton
                     key={p.id}
                     active={ timerType.id === p.id }
-                    onPress={() => setTimerType(p)}
+                    onPress={() => handleChangeTimer(p)}
                     display={p.display}/>
                   ))}
         </View >
-        <Timer totalSeconds = {timerType.initialValue}/>
+        <Timer totalSeconds = {timeLeft}/>
          {/* componente botão */}
-         <FlowButton/>
+         <FlowButton 
+            onPress = {() => {
+              currentTime ? pauseTimer() : startTimer();
+            }}
+          />
       </View>
         {/* footer vem aqui */}
         <FlowFooter/>
@@ -62,23 +72,3 @@ const styles = StyleSheet.create({
       alignItems: 'center',
      },
 });
-const pomodoro = [
-  {
-    id: 'focus',
-    initialValue:25,
-    image:require('./pomodoro.png'),
-    display: 'Focus'
-  },
-  {
-    id: 'short',
-    initialValue:5,
-    image:require('./short.png'),
-    display: 'Short'
-  },
-  {
-    id: 'long',
-    initialValue:15,
-    image:require('./long.png'),
-    display: 'Long'
-  }
-]

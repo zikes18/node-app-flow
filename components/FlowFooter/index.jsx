@@ -15,7 +15,6 @@ export const FlowFooter = () =>{
 const styles = StyleSheet.create({
     footer: {
         width: '80%',
-        borderWidth: 2,
         paddingVertical: 25,
       },
       footerText: {

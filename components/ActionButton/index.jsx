@@ -3,7 +3,10 @@ export const ActionButton = ({ active, onPress, display }) => {
     return (
         <Pressable
             style={active ? styles.contextButtonActive : null}
-            onPress={onPress}
+
+            onPress={() => {
+                onPress();
+            }}
         >
             <Text style={styles.contextButtonText}>
                 {display}

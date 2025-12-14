@@ -1,7 +1,7 @@
 import { StyleSheet, Text } from "react-native"
 
 export const Timer = ({ totalSeconds }) => {
-    const date = new Date(totalSeconds * 60000)
+    const date = new Date(totalSeconds * 1000)
     const options = { minute: '2-digit', second: '2-digit' }
     return (
         <Text style={styles.timer}>
