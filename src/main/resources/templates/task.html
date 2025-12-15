@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Flow</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #021123; color: white; }
+        .card { background-color: #144480; border: 1px solid #B872FF; }
+        h1 { color: #B872FF; }
+        .table { color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h1>📊 Histórico de Foco</h1>
+        <p>Tarefas recebidas do App React Native</p>
+    </div>
+
+    <div class="card p-4">
+        <table class="table table-dark table-hover">
+            <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Data/Hora</th>
+                <th>Duração (s)</th>
+                <th>Tipo</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="task : ${tarefas}">
+                <td th:text="${task.descricao}">Descrição aqui</td>
+
+                <td th:text="${task.dataTarefa}">Data aqui</td>
+
+                <td th:text="${task.tempoPomodoro}">1500</td>
+
+                <td>
+                    <span th:if="${task.tipo == 1}" class="badge bg-danger">Pomodoro</span>
+                    <span th:if="${task.tipo == 2}" class="badge bg-primary">Curta</span>
+                    <span th:if="${task.tipo == 3}" class="badge bg-success">Longa</span>
+                </td>
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(tarefas)}">
+                <td colspan="4" class="text-center text-muted">
+                    Nenhuma tarefa registrada ainda. Use o App! 📱
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="text-center mt-3">
+        <a href="/painel" class="btn btn-outline-light">🔄 Atualizar Lista</a>
+    </div>
+</div>
+
+</body>
+</html>
